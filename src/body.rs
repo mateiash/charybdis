@@ -14,32 +14,32 @@ pub struct Body {
 }
 
 impl Body {
-    pub fn new(mass : f32, radius : f32) -> Self{
+    pub fn new(mass : f32, radius : f32, pos : (f32, f32, f32), vel : (f32, f32, f32), color : Color) -> Self{
         let circle = shapes::Circle {
             radius: radius,
-            center: Vec2::ZERO,
+            center: Vec2::new(pos.0, pos.1),
         };
 
         Self {
             mass : Mass(mass),
             volume : Volume { radius : radius },
-            velocity : Velocity { vx: 0.0, vy: 0.0, vz: 0.0 },
+            velocity : Velocity { vx: vel.0, vy: vel.1, vz: vel.2 },
 
             shape : ShapeBundle {
             path: GeometryBuilder::build_as(&circle),
                 ..default()
             },
-            fill : Fill::color(Color::BLACK),
-            stroke : Stroke::new(Color::BLACK, 2.0),
+            fill : Fill::color(color),
+            stroke : Stroke::new(color, 2.0),
         }
     }
 }
 
 #[derive(Component)]
 pub struct Velocity {
-    vx : f32,
-    vy : f32,
-    vz : f32,
+    pub vx : f32,
+    pub vy : f32,
+    pub vz : f32,
 }
 
 /// Measured in solar masses
