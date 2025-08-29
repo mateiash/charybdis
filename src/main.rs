@@ -18,7 +18,7 @@ fn main() {
 fn populate(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<ColorMaterial>>) {
     commands.spawn(Camera2d);
 
-    commands.spawn(Body::new(1.0, 0.5, (-100.0, 50.0, 0.0), (20.0, 0.0, 0.0), Color::WHITE, &mut meshes, &mut materials));
-    commands.spawn(Body::new(1.0, 30.0, (0.0, 0.0, 0.0), (0.0, 0.0, 0.0), Color::BLACK, &mut meshes, &mut materials));
+    commands.spawn(Body::new(1.0, 0.0002, (-0.03, 0.02, 0.0), (0.002, 0.0, 0.0), Color::WHITE, &mut meshes, &mut materials));
+    commands.spawn(Body::new(1.0, 0.01, (0.0, 0.0, 0.0), (0.0, 0.0, 0.0), Color::BLACK, &mut meshes, &mut materials));
 
 }
