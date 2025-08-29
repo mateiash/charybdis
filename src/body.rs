@@ -1,36 +1,30 @@
 use bevy::prelude::*;
-use bevy_prototype_lyon::prelude::*;
 
 #[derive(Bundle)]
 pub struct Body {
     mass : Mass,
     volume : Volume,
     velocity : Velocity,
+    transform : Transform,
 
-
-    shape : ShapeBundle,
-    fill : Fill,
-    stroke : Stroke,
+    mesh : Mesh2d,
+    mesh_material : MeshMaterial2d<ColorMaterial>,
 }
 
 impl Body {
-    pub fn new(mass : f32, radius : f32, pos : (f32, f32, f32), vel : (f32, f32, f32), color : Color) -> Self{
-        let circle = shapes::Circle {
-            radius: radius,
-            center: Vec2::new(pos.0, pos.1),
-        };
+    pub fn new(mass : f32, radius : f32, pos : (f32, f32, f32), vel : (f32, f32, f32), color : Color,
+                meshes: &mut ResMut<Assets<Mesh>>, materials: &mut ResMut<Assets<ColorMaterial>>
+    ) -> Self{
+        let circle = meshes.add(Circle::new(radius));
 
         Self {
             mass : Mass(mass),
             volume : Volume { radius : radius },
             velocity : Velocity { vx: vel.0, vy: vel.1, vz: vel.2 },
+            transform : Transform::from_xyz( pos.0, pos.1, pos.2 ),
 
-            shape : ShapeBundle {
-            path: GeometryBuilder::build_as(&circle),
-                ..default()
-            },
-            fill : Fill::color(color),
-            stroke : Stroke::new(color, 2.0),
+            mesh : Mesh2d(circle),
+            mesh_material : MeshMaterial2d(materials.add(color)),
         }
     }
 }
