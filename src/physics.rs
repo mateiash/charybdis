@@ -17,9 +17,9 @@ impl Plugin for PhysicsPlugin {
 impl PhysicsPlugin {
     fn move_entities(mut query: Query<(&mut Transform, &Velocity)>, time: Res<Time>) {
         for (mut transform, velocity) in &mut query {
-            transform.translation.x += au_to_pixels(velocity.vx) * time.delta_secs();
-            transform.translation.y += au_to_pixels(velocity.vy) * time.delta_secs();
-            transform.translation.z += au_to_pixels(velocity.vz) * time.delta_secs();
+            transform.translation.x += velocity.vx * time.delta_secs();
+            transform.translation.y += velocity.vy * time.delta_secs();
+            transform.translation.z += velocity.vz * time.delta_secs();
         }
     }
 }
