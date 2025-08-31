@@ -9,8 +9,9 @@ use crate::physics::{pixels_to_au, PhysicsPlugin};
 fn main() {
     let mut app = App::new();
     app.add_plugins(DefaultPlugins);
-    app.add_plugins(PhysicsPlugin);
     app.add_systems(Startup, (populate, set_scale).chain());
+    app.add_plugins(PhysicsPlugin);
+    
     //app.add_systems(Update, calc_bend);
     app.run();
 }
@@ -18,8 +19,8 @@ fn main() {
 fn populate(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<ColorMaterial>>) {
     commands.spawn(Camera2d);
 
-    commands.spawn(Body::new(1.0, 0.0002, (-0.03, 0.02, 0.0), (0.002, 0.0, 0.0), Color::WHITE, &mut meshes, &mut materials));
-    commands.spawn(Body::new(1.0, 0.01, (0.0, 0.0, 0.0), (0.0, 0.0, 0.0), Color::BLACK, &mut meshes, &mut materials));
+    commands.spawn(Body::new(0.0002, (-0.03, 0.01, 0.0), (physics::LIGHT_SPEED, 0.0, 0.0), Color::WHITE, &mut meshes, &mut materials));
+    commands.spawn(MassBody::new(1.0, 0.01, (0.0, 0.0, 0.0), (0.0, 0.0, 0.0), Color::BLACK, &mut meshes, &mut materials));
 }
 
 fn set_scale(
